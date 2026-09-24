@@ -1,0 +1,9 @@
+{
+  "name": "@edge/sim",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@edge/domain": "workspace:*" },
+  "devDependencies": { "fast-check": "4.10.2" }
+}

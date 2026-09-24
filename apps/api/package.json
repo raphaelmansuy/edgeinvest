@@ -1,0 +1,22 @@
+{
+  "name": "@edge/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { "./app": "./src/app.ts", "./usecases/*": "./src/usecases/*.ts", "./adapters/*": "./src/adapters/*.ts", "./ports": "./src/ports.ts", "./compose": "./src/compose.ts" },
+  "scripts": {
+    "start": "bun src/main.ts",
+    "dev": "bun --watch src/main.ts"
+  },
+  "dependencies": {
+    "@edge/content": "workspace:*",
+    "@edge/contracts": "workspace:*",
+    "@edge/copy": "workspace:*",
+    "@edge/domain": "workspace:*",
+    "@edge/sim": "workspace:*",
+    "@hono/zod-validator": "0.9.1",
+    "canonicalize": "5.1.0",
+    "hono": "4.13.8",
+    "zod": "4.6.5"
+  }
+}

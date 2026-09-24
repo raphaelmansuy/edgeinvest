@@ -1,0 +1,28 @@
+{
+  "name": "edgeinvest",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*", "e2e"],
+  "scripts": {
+    "db:migrate": "bun run tools/migrate.ts",
+    "db:seed": "bun run tools/seed.ts",
+    "dev:api": "bun run --cwd apps/api dev",
+    "dev:web": "bun run --cwd apps/web dev",
+    "dev:worker": "bun run --cwd apps/worker dev",
+    "test": "bun test packages",
+    "test:int": "bun test --preload ./test/pg.ts apps/api/test",
+    "test:e2e": "playwright test",
+    "lint": "biome check .",
+    "lint:copy": "bun run tools/copy-lint.ts",
+    "typecheck": "tsc -p tsconfig.json && tsc -p apps/web",
+    "trace": "bun run tools/trace.ts",
+    "check": "bun run lint && bun run typecheck && bun run lint:copy && bun run test && bun run test:int"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@biomejs/biome": "2.5.14",
+    "@playwright/test": "1.63.0",
+    "@types/bun": "latest",
+    "typescript": "7.0.2"
+  }
+}

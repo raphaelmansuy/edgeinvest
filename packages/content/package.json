@@ -1,0 +1,9 @@
+{
+  "name": "@edge/content",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts", "./game": "./src/game.ts" },
+  "dependencies": { "@edge/domain": "workspace:*", "@edge/sim": "workspace:*" },
+  "devDependencies": { "@edge/copy": "workspace:*" }
+}

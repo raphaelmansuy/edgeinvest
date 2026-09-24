@@ -1,0 +1,13 @@
+{
+  "name": "@edge/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@edge/api": "workspace:*",
+    "@edge/content": "workspace:*",
+    "@edge/contracts": "workspace:*",
+    "@edge/copy": "workspace:*",
+    "@edge/domain": "workspace:*"
+  }
+}
