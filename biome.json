@@ -1,0 +1,18 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
+  "files": {
+    "includes": ["apps/**", "packages/**", "tools/**", "e2e/**", "!**/node_modules", "!**/routeTree.gen.ts", "!**/data/**", "!**/dist"]
+  },
+  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "lineWidth": 140 },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": { "noNonNullAssertion": "off", "useTemplate": "off" },
+      "suspicious": { "noExplicitAny": "warn", "noArrayIndexKey": "off" },
+      "a11y": { "noSvgWithoutTitle": "off" },
+      "complexity": { "noForEach": "off" }
+    }
+  },
+  "javascript": { "formatter": { "quoteStyle": "double" } }
+}

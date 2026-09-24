@@ -37,7 +37,7 @@ Legend for **Test**: `U` bun unit · `P` fast-check property · `I` integration 
 
 | ID | Edge case | Mitigation | Layer | Test |
 |----|-----------|------------|-------|------|
-| EC-MN-001 | Float drift (`0.1+0.2`) in premiums, reserves, basis | Scaled `bigint` (4 dp) in domain; `NUMERIC` in DB; strict parse regex `^(-)?(\d{1,14})(?:\.(\d{1,4}))?$` | D | U `packages/domain/money.test.ts` ✓ |
+| EC-MN-001 | Float drift (`0.1+0.2`) in premiums, reserves, basis | Branded `Usd4` safe integers (1/10,000 USD) in domain; `NUMERIC` in DB; strict parse regex `^(-)?(\d{1,14})(?:\.(\d{1,4}))?$` | D | U `packages/domain/money.test.ts` ✓ |
 | EC-MN-002 | Input `1e3`, `1,000`, `.5`, `12.345678`, locale commas | Rejected, never coerced; message names the format | Z, D | U money ✓ · E inputs form |
 | EC-MN-003 | Limit price off the 0.01 tick | `R-TICK` → `OFF_TICK` | D | U rules ✓ |
 | EC-MN-004 | JSON numbers lose precision on the wire | Decimals are **strings** in every contract; Zod `z.string().regex()` | Z | C contracts snapshot |

@@ -1,0 +1,22 @@
+{
+  "name": "@edge/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@edge/contracts": "workspace:*",
+    "@edge/copy": "workspace:*",
+    "@edge/domain": "workspace:*",
+    "d3-scale": "4.0.2",
+    "d3-shape": "3.2.0",
+    "react": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/d3-scale": "4.0.9",
+    "@types/d3-shape": "3.2.0",
+    "@types/react": "19.3.0"
+  }
+}

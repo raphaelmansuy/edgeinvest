@@ -1,0 +1,8 @@
+{
+  "name": "@edge/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@edge/domain": "workspace:*", "zod": "4.6.5" }
+}

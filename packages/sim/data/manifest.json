@@ -1,0 +1,54 @@
+{
+  "generated_by": "tools/fetch-datasets.ts",
+  "retrieved_at": "2026-09-23T16:12:03.175Z",
+  "cutoff": "2026-08-28",
+  "licence": "Yahoo Finance public chart data; educational, non-commercial use. Not investment data of record.",
+  "files": {
+    "qqq-q-2010-2026-v1.json": {
+      "sha256": "e835bf0652630c8094e18ec4657bf1d2c1626b9e44a34eba37b2846b3c0523f3",
+      "source_urls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval=1mo&period1=915148800&includeAdjustedClose=true&events=div"
+      ],
+      "notes": "Dividend-adjusted monthly closes; sequential non-overlapping 3-month returns."
+    },
+    "crash/dotcom_2000.json": {
+      "sha256": "2fee69b816f7be0fb90793cf5a81d04428a5ae59d5df11f8f98dbeb584b2261d",
+      "source_urls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVXN?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EIRX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div"
+      ],
+      "notes": "Split-adjusted weekly QQQ closes (price only). IV proxy = VXN close / 100; before 2001-02 VIX × 1.3 (disclosed)."
+    },
+    "crash/gfc_2008.json": {
+      "sha256": "1546de5cdb1c28899eae1c885fd307f572bbb0ffffe922a4f7cbe1b4ebf03e3f",
+      "source_urls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVXN?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EIRX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div"
+      ],
+      "notes": "Split-adjusted weekly QQQ closes (price only). IV proxy = VXN close / 100; before 2001-02 VIX × 1.3 (disclosed)."
+    },
+    "crash/covid_2020.json": {
+      "sha256": "d42641957f4166e3ab72f54b0b182fc3cdeff6c0dce197574beee5c3a27d1b1a",
+      "source_urls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVXN?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EIRX?interval=1wk&period1=915148800&includeAdjustedClose=true&events=div"
+      ],
+      "notes": "Split-adjusted weekly QQQ closes (price only). IV proxy = VXN close / 100; before 2001-02 VIX × 1.3 (disclosed)."
+    },
+    "qqq-m-2001-2026-v1.json": {
+      "sha256": "efb694cff120b451d3c2b733f72a31a85ac6e3f8ddaf908c1a3883ead6c3229f",
+      "source_urls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval=1mo&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVXN?interval=1mo&period1=915148800&includeAdjustedClose=true&events=div",
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EIRX?interval=1mo&period1=915148800&includeAdjustedClose=true&events=div"
+      ],
+      "notes": "Monthly dividend-adjusted close, VXN/100 as IV proxy, ^IRX/100 as annual T-bill rate."
+    }
+  }
+}

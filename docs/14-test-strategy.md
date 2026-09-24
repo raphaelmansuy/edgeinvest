@@ -48,8 +48,8 @@ and CI refuses to merge if one is missing ([§6](#6-traceability-gate-ci)).
 
 ```ts
 fc.assert(fc.property(arbStrike, arbPremiumBelow, arbQty, (K, p, q) => {
-  const r = invariants({ strike: K, premium: p, qty: q, putCall: "P" });
-  return r.ok && r.worstCase === r.reserve - r.maxProfit && r.breakEven > 0n && r.breakEven < K;
+  const r = shortPutInvariants({ strike: K, premium: p, qty: q });
+  return r.worstCase === r.reserve - r.maxProfit && r.breakEven > 0 && r.breakEven < K;
 }), { numRuns: 1000 });
 ```
 

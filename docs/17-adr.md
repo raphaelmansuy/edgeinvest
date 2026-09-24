@@ -90,8 +90,8 @@ and shows a new contributor which constraint a "simpler" idea would break.
 ### ADR-008 Money as scaled integers
 
 - **Context.** Floats break the five-number identity at the cent level.
-- **Decision.** Domain uses `bigint` scaled by 10⁴; Postgres `NUMERIC(18,4)`; DTOs carry decimal strings validated by regex.
-- **Rejected.** `number` (drift), decimal.js (extra dependency for what `bigint` already does), cents-only integers (premium ticks and rates need 4 dp).
+- **Decision.** Domain uses a branded `Usd4` = safe-integer `number` of 1/10,000 USD (overflow throws `UNSAFE_MONEY`); Postgres `NUMERIC(18,4)`; DTOs carry decimal strings validated by regex.
+- **Rejected.** float `number` of dollars (drift), `bigint` (no JSON support, slower, not needed below 9×10¹¹ USD), decimal.js (extra dependency), cents-only integers (rates and premiums need 4 dp).
 - **Consequences.** One formatter (`MoneyText`); property tests for round trips (EC-MN-001/002).
 
 ### ADR-009 TypeScript 7.0.2 with a 6.0.3 fallback

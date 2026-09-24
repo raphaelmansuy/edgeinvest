@@ -1,0 +1,89 @@
+name: edgeinvest
+
+x-bun-app: &bun-app
+  build: { context: ., dockerfile: Dockerfile }
+  env_file: [.env]
+  extra_hosts: ["host.docker.internal:host-gateway"]   # reach native Ollama on macOS/Linux
+  restart: unless-stopped
+  depends_on:
+    db: { condition: service_healthy }
+    migrate: { condition: service_completed_successfully }
+
+services:
+  db:
+    image: pgvector/pgvector:0.8.6-pg18-trixie
+    environment:
+      POSTGRES_USER: edge_owner
+      POSTGRES_PASSWORD: ${POSTGRES_OWNER_PASSWORD:?set in .env}
+      POSTGRES_DB: edgeinvest
+    volumes:
+      - pgdata:/var/lib/postgresql          # PG18 images: PGDATA=/var/lib/postgresql/18/docker
+    ports: ["127.0.0.1:${EDGE_DB_PORT:-5432}:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U edge_owner -d edgeinvest"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build: { context: ., dockerfile: Dockerfile, target: migrate }
+    env_file: [.env]
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+    depends_on: { db: { condition: service_healthy } }
+    restart: "no"
+
+  api:
+    <<: *bun-app
+    build: { context: ., dockerfile: Dockerfile, target: api }
+    environment:
+      DATABASE_URL: postgres://edge_app:${EDGE_APP_PASSWORD:?}@db:5432/edgeinvest
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      AGENT_PROVIDER: ${AGENT_PROVIDER:-ollama}          # 'fake' in e2e
+      AGENT_MODEL: ${AGENT_MODEL:-qwen3.5:9b-mlx}
+      EMBED_MODEL: ${EMBED_MODEL:-embeddinggemma}
+    ports: ["127.0.0.1:${EDGE_API_PORT:-8787}:8787"]
+    healthcheck:
+      test: ["CMD", "bun", "-e", "fetch('http://127.0.0.1:8787/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    develop:
+      watch:
+        - { action: sync+restart, path: ./apps/api/src, target: /repo/apps/api/src }
+        - { action: sync+restart, path: ./packages, target: /repo/packages }
+        - { action: rebuild, path: ./bun.lock }
+
+  worker:
+    <<: *bun-app
+    build: { context: ., dockerfile: Dockerfile, target: worker }
+    environment:
+      DATABASE_URL: postgres://edge_app:${EDGE_APP_PASSWORD:?}@db:5432/edgeinvest
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      EMBED_MODEL: ${EMBED_MODEL:-embeddinggemma}
+
+  web:
+    build: { context: ., dockerfile: Dockerfile, target: web-dev }
+    environment:
+      API_PROXY_TARGET: http://api:8787
+    ports: ["127.0.0.1:${EDGE_WEB_PORT:-5173}:5173"]
+    depends_on: { api: { condition: service_healthy } }
+    develop:
+      watch:
+        - { action: sync, path: ./apps/web/src, target: /repo/apps/web/src }
+        - { action: sync, path: ./packages, target: /repo/packages }
+        - { action: rebuild, path: ./bun.lock }
+
+  ollama:                                  # only for Linux hosts with an NVIDIA GPU
+    image: ollama/ollama
+    profiles: ["linux-gpu"]
+    volumes: [ollama:/root/.ollama]
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: all, capabilities: [gpu] }]
+
+volumes:
+  pgdata:
+  ollama:
